@@ -1,0 +1,23 @@
+import os
+
+def get_current_plugin_info():
+    try:
+        # Get Revit application
+        app = _revit_.Application
+        
+        # Get current script information
+        current_script = os.path.basename(_file_)
+        script_directory = os.path.dirname(os.path.abspath(_file_))
+        
+        print("\nUser and Plugin Information:")
+        print("-----------------")
+        print(f"Username: {os.environ.get('USERNAME')}")
+        print(f"Computer: {os.environ.get('COMPUTERNAME')}")
+        print(f"Revit Version: {app.VersionName}")
+        print(f"Build Number: {app.VersionBuild}")
+        print(f"\nPlugin Details:")
+        print(f"Current Script: {current_script}")
+        print(f"Script Location: {script_directory}")
+        
+    except Exception as e:
+        print(f"Error getting information: {str(e)}")

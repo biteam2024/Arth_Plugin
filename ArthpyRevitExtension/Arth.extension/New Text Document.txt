@@ -1,0 +1,15 @@
+{
+  "builtin": "False",
+  "type": "extension",
+  "name": "Your Plugin Name",
+  "description": "Description of what your plugin does",
+  "author": "Your Name",
+  "author-url": "http://your-website.com",
+  "url": "https://github.com/your-repo",
+  "website": "https://github.com/your-repo",
+  "image": "",
+  "dependencies": [],
+  "more_info": "http://your-documentation.com",
+  "copyright": "Copyright © 2025 Your Name",
+  "license": "MIT"
+}
