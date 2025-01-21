@@ -582,9 +582,25 @@ class UnlistedSheetsList(object):
 
 # New print option added SD
 
+class RevitSettings:
+    pass
+
+
 class PrintSheetsWindow(forms.WPFWindow):
     def __init__(self, xaml_file_name):
         forms.WPFWindow.__init__(self, xaml_file_name)
+
+        #for hide_refor_work_planes
+        self._hide_refor_work_planes = False
+
+        #for hide_unreferenced_view_tags
+        self._hide_unreferenced_view_tags = False
+
+        #for scope box
+        self._hide_scope_box = False
+
+        #for self._hide_crop_boundaries
+        self._hide_crop_boundaries = False
 
         # Initialize Save Location (default to Desktop)
         self._save_location = os.path.expanduser("~\Desktop\Arth")
@@ -622,13 +638,38 @@ class PrintSheetsWindow(forms.WPFWindow):
         # Ensure the path is dynamically updated
         full_path = os.path.join(self._save_location, file_name)
         try:
+
+            # Apply the hide scope box setting SS
+            if self._hide_scope_box:
+                self.apply_scope_box_settings(hide=True)
+
             # Print the dynamic path for debugging
             print("Saving PDF to: {}".format(full_path))
 
             # Here, integrate the PDF saving logic. If you are using PDF24:
             self.save_with_pdf24(full_path)  # Custom method to handle PDF24 saving
+
+            # Reset scope box settings if necessary SS
+            if self._hide_scope_box:
+                self.apply_scope_box_settings(hide=False)
+
         except Exception as ex:
             print("Error saving PDF: {}".format(ex))
+
+    # Example Usage SS
+    settings = RevitSettings()
+
+    try:
+        # Valid assignment
+        settings.hide_refor_work_planes = True
+        print("hide_refor_work_planes is set to: {}".format(settings.hide_refor_work_planes))
+
+
+        # Invalid assignment
+        settings.hide_refor_work_planes = "True"  # This will raise a ValueError
+    except ValueError as e:
+        print("Error: {}".format(e))
+
 
     def save_with_pdf24(self, full_path):
         """Save the PDF using PDF24 - adjust this with your PDF24 specific method"""
@@ -651,7 +692,17 @@ class PrintSheetsWindow(forms.WPFWindow):
         except Exception as ex:
             print("Error saving PDF using PDF24: {}".format(ex))  # Using .format() for compatibility
 
+    #SD
+    def print_hide_unreferenced_view_tags(self):
+        """Print the current value of hide_unreferenced_view_tags."""
+        print("hide_unreferenced_view_tags is set to:", self.hide_unreferenced_view_tags)
 
+    def print_hide_crop_boundaries(self):
+        """Print the current value of hide_crop_boundaries."""
+        print("hide_crop_boundaries is set to:", self.hide_crop_boundaries)
+
+
+    #SS end
     # doc and schedule
     @property
     def selected_doc(self):
@@ -695,6 +746,55 @@ class PrintSheetsWindow(forms.WPFWindow):
     @property
     def include_placeholders(self):
         return self.indexspace_cb.IsChecked
+
+    #Options Checkbox SD
+    @property
+    def hide_refor_work_planes(self):
+        """Getter for the hide_refor_work_planes property."""
+        return self._hide_refor_work_planes
+
+    @hide_refor_work_planes.setter
+    def hide_refor_work_planes(self, value):
+        """Setter for the hide_refor_work_planes property."""
+        if not isinstance(value, bool):
+            raise ValueError("hide_refor_work_planes must be a boolean.")
+        self._hide_refor_work_planes = value
+
+    @property
+    def hide_unreferenced_view_tags(self):
+        """Getter for hide_unreferenced_view_tags."""
+        return self._hide_unreferenced_view_tags
+
+    @hide_unreferenced_view_tags.setter
+    def hide_unreferenced_view_tags(self, value):
+        """Setter for hide_unreferenced_view_tags."""
+        if not isinstance(value, bool):
+            raise ValueError("hide_unreferenced_view_tags must be a boolean.")
+        self._hide_unreferenced_view_tags = value
+
+    @property
+    def hide_scope_box(self):
+        """Getter for the hide_scope_box property."""
+        return self._hide_scope_box
+
+    @hide_scope_box.setter
+    def hide_scope_box(self, value):
+        """Setter for the hide_scope_box property with validation."""
+        if not isinstance(value, bool):
+            raise ValueError("hide_scope_box must be a boolean")
+        self._hide_scope_box = value
+
+    @property
+    def hide_crop_boundaries(self):
+        """Getter for hide_crop_boundaries."""
+        return self._hide_crop_boundaries
+
+    @hide_crop_boundaries.setter
+    def hide_crop_boundaries(self, value):
+        """Setter for hide_crop_boundaries."""
+        if not isinstance(value, bool):
+            raise ValueError("hide_crop_boundaries must be a boolean.")
+        self._hide_crop_boundaries = value
 
     # print settings
     @property
@@ -869,6 +969,37 @@ class PrintSheetsWindow(forms.WPFWindow):
             )
             return False
         return True
+
+    # def save_pdf(self, file_name):
+    #     """Save PDF to the dynamically selected location."""
+    #     full_path = os.path.join(self._save_location, file_name)
+    #
+    #     try:
+    #         # Apply the hide scope box setting
+    #         if self.hide_scope_box:
+    #             self.apply_scope_box_settings(hide=True)
+    #
+    #         # Print the PDF (logic goes here)
+    #         print(f"Saving PDF to: {full_path}")
+    #         self.save_with_pdf24(full_path)
+    #
+    #         # Reset scope box settings if necessary
+    #         if self.hide_scope_box:
+    #             self.apply_scope_box_settings(hide=False)
+    #
+    #     except Exception as ex:
+    #         print(f"Error saving PDF: {ex}")
+    #
+    # def apply_scope_box_settings(self, hide):
+    #     """Apply scope box settings to Revit sheets."""
+    #     if hide:
+    #         print("Hiding the scope box...")
+    #         # Implement logic to hide scope box in Revit views
+    #         # Example: Modify sheet or view settings in Revit API
+    #     else:
+    #         print("Restoring the scope box...")
+    #         # Implement logic to restore the scope box visibility
+
 
     # SD Change the location
     def _print_combined_sheets_in_order(self, target_sheets):

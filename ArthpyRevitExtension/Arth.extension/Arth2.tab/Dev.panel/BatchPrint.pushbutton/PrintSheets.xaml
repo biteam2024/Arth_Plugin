@@ -110,7 +110,7 @@
                 <StackPanel Grid.Column="0">
                     <DockPanel Height="24">
                         <Grid Margin="0,0,10,0">
-                            <Polygon Points="0,0 140,0 150,12 140,24 0,24"  Fill="{DynamicResource pyRevitDarkBrush}" SnapsToDevicePixels="True"/>
+                            <Polygon Points="0,0 140,0 150,12 140,24 0,24"  Fill="#48BB78" SnapsToDevicePixels="True"/>
                             <TextBlock Text="Model" FontWeight="Medium" VerticalAlignment="Center" Margin="10,0,10,0" Foreground="White"/>
                         </Grid>
                         <ComboBox x:Name="documents_cb" SelectionChanged="doclist_changed" VerticalAlignment="Stretch">
@@ -132,7 +132,7 @@
                     </DockPanel>
                     <DockPanel Height="24" Margin="0,5,0,0">
                         <Grid Margin="0,0,10,0">
-                            <Polygon Points="0,0 140,0 150,12 140,24 0,24" Fill="{DynamicResource pyRevitDarkBrush}" SnapsToDevicePixels="True" />
+                            <Polygon Points="0,0 140,0 150,12 140,24 0,24" Fill="#48BB78" SnapsToDevicePixels="True" />
                             <TextBlock Text="Sheet Index (Schedule)" FontWeight="Medium" VerticalAlignment="Center" Margin="10,0,10,0" Foreground="White"/>
                         </Grid>
                         <ComboBox x:Name="schedules_cb" SelectionChanged="sheetlist_changed" VerticalAlignment="Stretch">
@@ -147,8 +147,8 @@
                     </DockPanel>
                     <DockPanel Grid.Row="1" Height="24" Margin="0,5,0,0">
                         <Grid Margin="0,0,10,0">
-                            <Polygon Points="0,0 140,0 150,12 140,24 0,24" Fill="{DynamicResource pyRevitDarkBrush}" SnapsToDevicePixels="True" />
-                            <TextBlock x:Name="fileLocation_tb" Text="Location" VerticalAlignment="Stretch" Margin="10,0,10,0" Foreground="White"/>
+                            <Polygon Points="0,0 140,0 150,12 140,24 0,24" Fill="#48BB78" SnapsToDevicePixels="True" />
+                            <TextBlock x:Name="fileLocation_tb" Text="Location" FontWeight="Medium" VerticalAlignment="Center" Margin="10,0,10,0" Foreground="White"/>
                         </Grid>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -226,6 +226,52 @@
                     </DockPanel>
                 </GroupBox>
             </Grid>
+             <!-- Options GroupBox -->
+            <Grid>
+             <Grid.ColumnDefinitions>
+                 <ColumnDefinition Width="2*" />
+                 <ColumnDefinition Width="3*" />
+             </Grid.ColumnDefinitions>
+                 <GroupBox Header="Options" Grid.Row="1" Grid.Column="0" Margin="5">
+                     <StackPanel>
+                         <CheckBox x:Name="_hide_refor_work_planes"  Margin="5" IsChecked="True" Click="options_changed">Hide ref/work planes</CheckBox>
+                         <CheckBox x:Name="_hide_unreferenced_view_tags"  Margin="5" IsChecked="True" Click="options_changed">Hide unreferenced view tags</CheckBox>
+                         <CheckBox x:Name="_hide_scope_box"  Margin="5" IsChecked="True" Click="options_changed">Hide scope boxes</CheckBox>
+                         <CheckBox x:Name="_hide_crop_boundaries"  Margin="5" IsChecked="True" Click="options_changed">Hide crop boundaries</CheckBox>
+
+                     </StackPanel>
+                 </GroupBox>
+                 <GroupBox Header="Zoom" Grid.Column="1" Margin="0,5,5,5" Padding="8">
+                    <StackPanel Margin="5">
+                        <RadioButton Content="Fit to Page" Name="FitToPageRadio" Margin="0,0,0,5"/>
+
+                        <StackPanel Orientation="Horizontal">
+                            <RadioButton Content="Zoom" Name="ZoomRadio" VerticalAlignment="Center" Margin="0,0,5,0"/>
+
+                            <!-- Numeric up/down control -->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox Grid.Column="0" Text="100" Width="40" Name="ZoomPercentage" VerticalAlignment="Center"/>
+
+                                <StackPanel Grid.Column="1" Margin="0,0,5,0">
+                                    <Button Content="▲" Height="12" Width="16" Padding="0" VerticalAlignment="Center" Name="ZoomUpButton" HorizontalAlignment="Center"/>
+                                    <Button Content="▼" Height="12" Width="16" Padding="0" VerticalAlignment="Center" Name="ZoomDownButton" HorizontalAlignment="Center"/>
+                                </StackPanel>
+
+                                <TextBlock Grid.Column="1" Text="% Size" VerticalAlignment="Center" Margin="40,0,-40,0"/>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                 </GroupBox>
+
+
+
+             </Grid>
+
             <StackPanel VerticalAlignment="Center" Margin="0,10,0,5">
                 <TextBlock TextWrapping="WrapWithOverflow" DockPanel.Dock="Left">
                     List of the sheets in selected sheet index
