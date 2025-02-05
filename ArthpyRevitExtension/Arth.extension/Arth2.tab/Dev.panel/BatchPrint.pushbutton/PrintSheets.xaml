@@ -232,7 +232,7 @@
                  <ColumnDefinition Width="2*" />
                  <ColumnDefinition Width="3*" />
              </Grid.ColumnDefinitions>
-                 <GroupBox Header="Options" Grid.Row="1" Grid.Column="0" Margin="5">
+                 <GroupBox Header="Options (Under Testing)" Grid.Row="1" Grid.Column="0" Margin="5">
                      <StackPanel>
                          <CheckBox x:Name="_hide_refor_work_planes"  Margin="5" IsChecked="True" Click="options_changed">Hide ref/work planes</CheckBox>
                          <CheckBox x:Name="_hide_unreferenced_view_tags"  Margin="5" IsChecked="True" Click="options_changed">Hide unreferenced view tags</CheckBox>
@@ -243,23 +243,27 @@
                  </GroupBox>
                  <GroupBox Header="Zoom" Grid.Column="1" Margin="0,5,5,5" Padding="8">
                     <StackPanel Margin="5">
-                        <RadioButton Content="Fit to Page" Name="FitToPageRadio" Margin="0,0,0,5"/>
+                        <!-- Fit to Page Radio Button -->
+                        <RadioButton Content="Fit to Page" Name="FitToPageRadio" Margin="0,0,0,5" IsChecked="True"/>
 
+                        <!-- Zoom Section -->
                         <StackPanel Orientation="Horizontal">
                             <RadioButton Content="Zoom" Name="ZoomRadio" VerticalAlignment="Center" Margin="0,0,5,0"/>
 
-                            <!-- Numeric up/down control -->
+                            <!-- Numeric Up/Down Control -->
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
-                                <TextBox Grid.Column="0" Text="100" Width="40" Name="ZoomPercentage" VerticalAlignment="Center"/>
+                                <!-- Zoom Percentage TextBox -->
+                                <TextBox Grid.Column="0" Text="100" Width="40" Name="ZoomPercentageTextBox" VerticalAlignment="Center" IsEnabled="False"/>
 
+                                <!-- Up/Down Buttons -->
                                 <StackPanel Grid.Column="1" Margin="0,0,5,0">
-                                    <Button Content="▲" Height="12" Width="16" Padding="0" VerticalAlignment="Center" Name="ZoomUpButton" HorizontalAlignment="Center"/>
-                                    <Button Content="▼" Height="12" Width="16" Padding="0" VerticalAlignment="Center" Name="ZoomDownButton" HorizontalAlignment="Center"/>
+                                    <Button Content="▲" Height="12" Width="16" Padding="0" VerticalAlignment="Center" Name="ZoomUpButton" HorizontalAlignment="Center" IsEnabled="False"/>
+                                    <Button Content="▼" Height="12" Width="16" Padding="0" VerticalAlignment="Center" Name="ZoomDownButton" HorizontalAlignment="Center" IsEnabled="False"/>
                                 </StackPanel>
 
                                 <TextBlock Grid.Column="1" Text="% Size" VerticalAlignment="Center" Margin="40,0,-40,0"/>

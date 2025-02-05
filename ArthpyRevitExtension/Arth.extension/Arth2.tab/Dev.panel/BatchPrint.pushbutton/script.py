@@ -602,6 +602,24 @@ class PrintSheetsWindow(forms.WPFWindow):
         #for self._hide_crop_boundaries
         self._hide_crop_boundaries = False
 
+#for zoom
+        # # Access controls by name
+        # self.FitToPageRadio = self.FindName("FitToPageRadio")
+        # self.ZoomRadio = self.FindName("ZoomRadio")
+        # self.ZoomUpButton = self.FindName("ZoomUpButton")
+        # self.ZoomDownButton = self.FindName("ZoomDownButton")
+        # self.ZoomPercentageTextBox = self.FindName("ZoomPercentageTextBox")
+        #
+        # # Initialize event handlers
+        # self.FitToPageRadio.Checked += self.radio_button_checked
+        # self.ZoomRadio.Checked += self.radio_button_checked
+        # self.ZoomUpButton.Click += self.zoom_up_click
+        # self.ZoomDownButton.Click += self.zoom_down_click
+        #
+        # # Initialize Zoom percentage
+        # self.ZoomPercentage = 100
+
+#for location
         # Initialize Save Location (default to Desktop)
         self._save_location = os.path.expanduser("~\Desktop\Arth")
 
@@ -701,6 +719,31 @@ class PrintSheetsWindow(forms.WPFWindow):
         """Print the current value of hide_crop_boundaries."""
         print("hide_crop_boundaries is set to:", self.hide_crop_boundaries)
 
+#for Zoom Part
+    # def radio_button_checked(self, sender, e):
+    #     """Handles the logic for enabling/disabling zoom controls."""
+    #     if self.ZoomRadio.IsChecked:
+    #         # Enable Zoom controls
+    #         self.ZoomUpButton.IsEnabled = True
+    #         self.ZoomDownButton.IsEnabled = True
+    #         self.ZoomPercentageTextBox.IsEnabled = True
+    #     elif self.FitToPageRadio.IsChecked:
+    #         # Disable Zoom controls
+    #         self.ZoomUpButton.IsEnabled = False
+    #         self.ZoomDownButton.IsEnabled = False
+    #         self.ZoomPercentageTextBox.IsEnabled = False
+    #
+    # def zoom_up_click(self, sender, e):
+    #     """Handler for the Zoom Up Button click event."""
+    #     self.ZoomPercentage += 10  # Increase zoom by 10%
+    #     self.ZoomPercentage = min(self.ZoomPercentage, 200)  # Cap zoom at 200%
+    #     self.ZoomPercentageTextBox.Text = str(self.ZoomPercentage)  # Update the TextBox
+    #
+    # def zoom_down_click(self, sender, e):
+    #     """Handler for the Zoom Down Button click event."""
+    #     self.ZoomPercentage -= 10  # Decrease zoom by 10%
+    #     self.ZoomPercentage = max(self.ZoomPercentage, 10)  # Cap zoom at 10%
+    #     self.ZoomPercentageTextBox.Text = str(self.ZoomPercentage)  # Update the TextBox
 
     #SS end
     # doc and schedule
@@ -969,37 +1012,6 @@ class PrintSheetsWindow(forms.WPFWindow):
             )
             return False
         return True
-
-    # def save_pdf(self, file_name):
-    #     """Save PDF to the dynamically selected location."""
-    #     full_path = os.path.join(self._save_location, file_name)
-    #
-    #     try:
-    #         # Apply the hide scope box setting
-    #         if self.hide_scope_box:
-    #             self.apply_scope_box_settings(hide=True)
-    #
-    #         # Print the PDF (logic goes here)
-    #         print(f"Saving PDF to: {full_path}")
-    #         self.save_with_pdf24(full_path)
-    #
-    #         # Reset scope box settings if necessary
-    #         if self.hide_scope_box:
-    #             self.apply_scope_box_settings(hide=False)
-    #
-    #     except Exception as ex:
-    #         print(f"Error saving PDF: {ex}")
-    #
-    # def apply_scope_box_settings(self, hide):
-    #     """Apply scope box settings to Revit sheets."""
-    #     if hide:
-    #         print("Hiding the scope box...")
-    #         # Implement logic to hide scope box in Revit views
-    #         # Example: Modify sheet or view settings in Revit API
-    #     else:
-    #         print("Restoring the scope box...")
-    #         # Implement logic to restore the scope box visibility
-
 
     # SD Change the location
     def _print_combined_sheets_in_order(self, target_sheets):
@@ -1608,11 +1620,16 @@ class PrintSheetsWindow(forms.WPFWindow):
                     self._print_sheets_in_order(target_sheets)
 
 
-def cleanup_sheetnumbers(doc):
-    sheets = revit.query.get_sheets(doc=doc)
-    with revit.Transaction('Cleanup Sheet Numbers', doc=doc):
-        for sheet in sheets:
-            sheet.SheetNumber = sheet.SheetNumber.replace(NPC, '')
+    def cleanup_sheetnumbers(doc):
+        sheets = revit.query.get_sheets(doc=doc)
+        with revit.Transaction('Cleanup Sheet Numbers', doc=doc):
+            for sheet in sheets:
+                sheet.SheetNumber = sheet.SheetNumber.replace(NPC, '')
+
+
+
+
+
 
 
 # ╔╦╗╔═╗╦╔╗╔
@@ -1641,7 +1658,7 @@ try:
         'usage':plugin_folder_name
     }
     headers = {
-        #'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImRldiJ9.eyJzdWIiOiI2NjY5NWYyNjg5NzczNmVkYTI1YmJkODgiLCJhdWQiOiJodHRwczovL2Rldi5hcnRoLWFpLmlvIiwiaXNzIjoiaHR0cHM6Ly9kZXYuYXJ0aC1haS5pbyIsImV4cCI6MTcxOTQ3MzA3MDE3OCwiaWF0IjoxNzE5NDczMDY2NTc4LCJlbWFpbCI6InBvc2FuaW5pdGlua3VtYXJAZ21haWwuY29tIiwicm9sZSI6IlVzZXIiLCJzdWJfcm9sZSI6IlN1cGVyIGFkbWluIiwiYWNjZXNzX2xldmVsIjo2fQ.U5t6HB-A5Q55zcjkCKqUeNLmW9JGb9YSGNqbUYQ7JIQ',  # If authentication is needed
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImRldiJ9.eyJzdWIiOiI2NjY5NWYyNjg5NzczNmVkYTI1YmJkODgiLCJhdWQiOiJodHRwczovL2Rldi5hcnRoLWFpLmlvIiwiaXNzIjoiaHR0cHM6Ly9kZXYuYXJ0aC1haS5pbyIsImV4cCI6MTcxOTQ3MzA3MDE3OCwiaWF0IjoxNzE5NDczMDY2NTc4LCJlbWFpbCI6InBvc2FuaW5pdGlua3VtYXJAZ21haWwuY29tIiwicm9sZSI6IlVzZXIiLCJzdWJfcm9sZSI6IlN1cGVyIGFkbWluIiwiYWNjZXNzX2xldmVsIjo2fQ.U5t6HB-A5Q55zcjkCKqUeNLmW9JGb9YSGNqbUYQ7JIQ',  # If authentication is needed
         'Authorization': 'Bearer token',
         'Content-Type': 'application/json'
     }
@@ -1667,7 +1684,6 @@ if __shiftclick__:  # pylint: disable=E0602
 
 else:
     PrintSheetsWindow('PrintSheets.xaml').ShowDialog()
-
 
 
 
